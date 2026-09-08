@@ -3,16 +3,22 @@ plugins {
   id 'expo-module-gradle-plugin'
 }
 
-group = 'expo.modules.anchorsdk'
+group = 'expo.modules.pinpointsdk'
 version = '0.1.0'
 
 android {
-  namespace "expo.modules.anchorsdk"
+  namespace "expo.modules.pinpointsdk"
   defaultConfig {
+    minSdkVersion 24
+    targetSdkVersion 35
+    compileSdkVersion 35
     versionCode 1
     versionName "0.1.0"
   }
   lintOptions {
     abortOnError false
+  }
+  buildFeatures {
+    buildConfig true
   }
 }

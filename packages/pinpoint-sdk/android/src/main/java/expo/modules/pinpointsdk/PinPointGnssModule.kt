@@ -1,4 +1,4 @@
-package expo.modules.PinPointSDK
+package expo.modules.pinpointsdk
 
 import android.Manifest
 import android.content.Context

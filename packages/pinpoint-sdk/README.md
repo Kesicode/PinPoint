@@ -176,7 +176,7 @@ artificially passes the kinematic envelope; the environmental gate fails it.
 ### PinPointGnss native module (raw C/N0)
 
 `useGnssMeasurements` wraps the native `PinPointGnss` module (Expo Modules API,
-`expo.modules.PinPointSDK.PinPointGnssModule`), which exposes:
+`expo.modules.pinpointsdk.PinPointGnssModule`), which exposes:
 
 - `start(): Promise<void>` — idempotent; registers a `GnssMeasurementsEvent.Callback`
   (Executor overload on API 31+, main-looper registration below). Requires
@@ -228,7 +228,7 @@ can only be exercised on hardware with a GNSS chipset.
 
 - The package is picked up via the workspace/`node_modules` symlink by Expo
   autolinking; `expo-module.config.json` declares the Android module class
-  `expo.modules.PinPointSDK.PinPointGnssModule`.
+  `expo.modules.pinpointsdk.PinPointGnssModule`.
 - Build with `expo-dev-client` / EAS build — not Expo Go.
 - No iOS implementation is provided; the module config declares Android only.
 

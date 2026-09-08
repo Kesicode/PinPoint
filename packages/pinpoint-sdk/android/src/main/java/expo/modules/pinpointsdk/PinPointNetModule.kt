@@ -1,4 +1,4 @@
-package expo.modules.PinPointSDK
+package expo.modules.pinpointsdk
 
 import android.content.Context
 import android.net.ConnectivityManager
