@@ -1,0 +1,78 @@
+/**
+ * PinPoint-sdk — on-device GNSS integrity monitoring for Expo (Android).
+ *
+ * Pipeline: Sensors -> Sensor Validation -> Fusion Estimator -> Integrity
+ * Evaluation (six physics checks) -> Spoof/Anomaly Engine -> Safety State
+ * Machine -> consumer. AI (ExecuTorch) explains verdicts in plain language and
+ * never touches state.
+ */
+
+// Raw GNSS C/N0 measurement stream (native module binding).
+export {
+  default as PinPointGnss,
+  type PinPointGnssSatellite,
+  type PinPointGnssMeasurementEvent,
+  type PinPointGnssErrorEvent,
+  type PinPointGnssStatus,
+  type PinPointGnssStatusEvent,
+} from './gnss/PinPointGnssModule';
+
+// Network-integrity signals (real OS-level VPN detection).
+export { default as PinPointNet } from './gnss/PinPointNetModule';
+
+// Sensor hooks and their pure helpers.
+export { useLocationStream } from './sensors/useLocationStream';
+export { locationToFix } from './sensors/fixMapping';
+export { useImuStream, MAG_FIELD_MIN_UT, MAG_FIELD_MAX_UT } from './sensors/useImuStream';
+export { magnetometerHeadingDeg, wrapAngleDelta } from './sensors/headingMath';
+export { useBarometerStream } from './sensors/useBarometerStream';
+export { useGnssMeasurements } from './sensors/useGnssMeasurements';
+
+// Physics checks and supporting formulas.
+export { kinematicCheck } from './physics/kinematicCheck';
+export { headingCheck } from './physics/headingCheck';
+export { temporalCheck } from './physics/temporalCheck';
+export { altitudeCheck, barometricAltitudeMeters, BARO_REFERENCE_PRESSURE_HPA } from './physics/altitudeCheck';
+export { environmentalCheck } from './physics/environmentalCheck';
+export { cn0Check } from './physics/cn0Check';
+export { networkCheck } from './physics/networkCheck';
+export { solarCompassHeading } from './physics/solarCompass';
+export { haversineMeters, forwardBearingDeg, circularDiffDeg, clamp01 } from './physics/geo';
+
+// Safety state machine (deterministic, pure).
+export {
+  evaluateIntegrity,
+  stepIntegrity,
+  confidenceOf,
+  RECOVERY_DEBOUNCE,
+  type IntegrityMachine,
+  type EvaluateResult,
+} from './evaluateIntegrity';
+
+// Public SDK (state machine owner + lazy AI that can never touch state).
+export { createPinPointSDK } from './ai/createPinPointSDK';
+export { PinPointProvider, type PinPointProviderProps } from './ai/PinPointProvider';
+export { explainVerdict, buildExplanationPrompt, ADVISORY_LATENCY_BUDGET_MS } from './ai/explainVerdict';
+export {
+  subscribeModelDownloads,
+  getModelDownloadStates,
+  type ModelTask,
+  type ModelDownloadState,
+} from './ai/executorchRuntime';
+export { embedText } from './ai/embedText';
+export { transcribeCommand } from './ai/transcribeCommand';
+
+// Shared contract types.
+export type {
+  PinPointSDK,
+  IntegrityState,
+  CheckId,
+  CheckResult,
+  Fix,
+  ImuSample,
+  BaroSample,
+  SatelliteMeasurement,
+  GnssMeasurementSample,
+  SensorWindow,
+  Verdict,
+} from './types';

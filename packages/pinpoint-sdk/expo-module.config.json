@@ -1,0 +1,6 @@
+{
+  "platforms": ["android"],
+  "android": {
+    "modules": ["expo.modules.pinpointsdk.PinPointGnssModule", "expo.modules.pinpointsdk.PinPointNetModule"]
+  }
+}
